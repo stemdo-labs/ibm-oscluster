@@ -26,6 +26,7 @@ resource "ibm_resource_instance" "cos_instance" {
   service  = "cloud-object-storage"
   plan     = "standard"
   location = "global"
+  resource_group_id = "4364ced224cf420fa07d8bf70a8d70df"
 }
 
 resource "ibm_container_vpc_cluster" "cluster" {
