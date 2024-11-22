@@ -32,7 +32,7 @@ resource "ibm_resource_instance" "cos_instance" {
 resource "ibm_container_vpc_cluster" "cluster" {
   name              = "my_vpc_cluster"
   vpc_id            = "r006-abb7c7ea-aadf-41bd-94c5-b8521736fadf"
-  kube_version      = "4.3_openshift"
+  kube_version      = "4.16.19_openshift"
   flavor            = "bx2.16x64"
   worker_count      = "2"
   entitlement       = "cloud_pak"
