@@ -40,6 +40,6 @@ resource "ibm_container_vpc_cluster" "cluster" {
   resource_group_id = "4364ced224cf420fa07d8bf70a8d70df"
   zones {
       subnet_id = "02x7-de5333da-a635-4714-a7aa-bc364387f052"
-      name      = "eu-es-1"
+      name      = "eu-es"
     }
 }
