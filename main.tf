@@ -1,3 +1,26 @@
+##############################################################################
+# Terraform Providers
+##############################################################################
+
+terraform {
+  required_providers {
+    ibm = {
+      source  = "IBM-Cloud/ibm"
+      version = "~>1.38.2"
+    }
+  }
+  required_version = ">=1.0"
+#  experiments      = [module_variable_optional_attrs]
+}
+
+##############################################################################
+
+provider "ibm" {
+  # ibmcloud_api_key = var.ibmcloud_api_key # comment out and remove variable for schematics runs
+  region           = "eu-es"
+  ibmcloud_timeout = 60
+}
+
 resource "ibm_resource_instance" "cos_instance" {
   name     = "my_cos_instance"
   service  = "cloud-object-storage"
