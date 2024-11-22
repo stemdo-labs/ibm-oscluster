@@ -17,7 +17,7 @@ terraform {
 
 provider "ibm" {
   # ibmcloud_api_key = var.ibmcloud_api_key # comment out and remove variable for schematics runs
-  region           = "eu-es"
+  region           = "eu-es-1"
   ibmcloud_timeout = 60
 }
 
@@ -40,6 +40,6 @@ resource "ibm_container_vpc_cluster" "cluster" {
   resource_group_id = "4364ced224cf420fa07d8bf70a8d70df"
   zones {
       subnet_id = "02x7-de5333da-a635-4714-a7aa-bc364387f052"
-      name      = "eu-es"
+      name      = "eu-es-1"
     }
 }
