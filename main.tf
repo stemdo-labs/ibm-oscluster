@@ -20,10 +20,12 @@ data "ibm_resource_group" "resource_group" {
 # Virtual Private Cloud (VPC)
 resource "ibm_is_vpc" "vpc" {
   name = local.name
+  resource_group               = data.ibm_resource_group.resource_group.id
 }
 
 # Public gateway to allow connectivity outside of the VPC
 resource "ibm_is_public_gateway" "gateway_subnet" {
+  resource_group               = data.ibm_resource_group.resource_group.id
   count = var.number_of_zones
   name  = "${local.name}-publicgateway-${count.index + 1}"
   vpc   = ibm_is_vpc.vpc.id
@@ -37,6 +39,7 @@ resource "ibm_is_public_gateway" "gateway_subnet" {
 
 # VPC subnets. Uses default CIDR range
 resource "ibm_is_subnet" "subnet" {
+  resource_group               = data.ibm_resource_group.resource_group.id
   count                    = var.number_of_zones
   name                     = "${local.name}-subnet-${count.index + 1}"
   vpc                      = ibm_is_vpc.vpc.id
@@ -76,4 +79,5 @@ resource "ibm_resource_instance" "cos_instance" {
   service  = var.service_offering
   plan     = var.plan
   location = "global"
+  resource_group_id               = data.ibm_resource_group.resource_group.id
 }
