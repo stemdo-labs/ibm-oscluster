@@ -53,7 +53,7 @@ variable "public_service_endpoint_disabled" {
 variable "disable_outbound_traffic_protection" {
   type        = bool
   default     = false
-  description = ""
+  description = "description"
 }
 
 variable "kube_version" {
