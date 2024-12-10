@@ -59,7 +59,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   flavor                          = var.worker_flavor
   kube_version                    = (var.kube_version != null ? var.kube_version : "${data.ibm_container_cluster_versions.cluster_versions.valid_openshift_versions[local.index]}_openshift")
   worker_count                    = var.workers_per_zone
-  disable_public_service_endpoint = var.public_service_endpoint_disabled
+#  disable_public_service_endpoint = var.public_service_endpoint_disabled
 #  disable_outbound_traffic_protection = var.disable_outbound_traffic_protection
   resource_group_id               = data.ibm_resource_group.resource_group.id
   cos_instance_crn                = ibm_resource_instance.cos_instance.id
