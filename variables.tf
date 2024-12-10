@@ -50,6 +50,12 @@ variable "public_service_endpoint_disabled" {
   description = "Whether or not to disable the public endpoint for the cluster."
 }
 
+variable "disable_outbound_traffic_protection" {
+  type        = bool
+  default     = false
+  description = ""
+}
+
 variable "kube_version" {
   type        = string
   default     = null
