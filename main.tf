@@ -82,3 +82,8 @@ resource "ibm_resource_instance" "cos_instance" {
   location = "global"
   resource_group_id               = data.ibm_resource_group.resource_group.id
 }
+
+resource "ibm_cr_namespace" "cr_namespace" {
+    name = "crpruebas"
+    resource_group_id = data.ibm_resource_group.group.id
+}
