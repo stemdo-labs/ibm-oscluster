@@ -1,2 +1,2 @@
-# public_service_endpoint_disabled = true
+public_service_endpoint_disabled = false
 disable_outbound_traffic_protection = true
