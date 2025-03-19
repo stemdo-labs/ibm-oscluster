@@ -22,7 +22,7 @@ terraform {
       source = "IBM-Cloud/ibm"
     }
   }
-  required_version = ">= 0.13"
+  required_version = ">= 0.12.0"
 }
 
 ##############################################################################
