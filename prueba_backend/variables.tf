@@ -8,3 +8,7 @@ variable "region" {
   default     = "eu-es"
   description = "The region to deploy the resources to."
 }
+variable "ibm_api_key" {
+  description = "IBM Cloud api key"
+  type        = string
+}
