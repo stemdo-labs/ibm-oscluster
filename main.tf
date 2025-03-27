@@ -91,7 +91,6 @@ resource "ibm_cr_namespace" "cr_namespace" {
 
 data "ibm_is_security_group" "runner_sg" {
   name = "runner-vpc-sg"
-  vpc  = ibm_is_vpc.vpc.id
 }
 
 data "ibm_container_cluster_config" "cluster_config" {
