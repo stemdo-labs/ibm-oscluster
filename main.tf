@@ -90,7 +90,7 @@ resource "ibm_cr_namespace" "cr_namespace" {
 }
 
 data "ibm_is_security_group" "runner_sg" {
-  name = "${var.vpc_name}-sg"
+  name = "runner-vpc-sg"
   vpc  = ibm_is_vpc.vpc.id
 }
 
