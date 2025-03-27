@@ -88,3 +88,30 @@ resource "ibm_cr_namespace" "cr_namespace" {
     name = "crpruebas2"
     resource_group_id = data.ibm_resource_group.resource_group.id
 }
+
+data "ibm_is_security_group" "runner_sg" {
+  name = "${var.vpc_name}-sg"
+  vpc  = ibm_is_vpc.vpc.id
+}
+
+data "ibm_container_cluster_config" "cluster_config" {
+  cluster_name_id = ibm_container_vpc_cluster.cluster.id
+  depends_on      = [ibm_container_vpc_cluster.cluster]
+}
+
+locals {
+  cluster_port = tonumber(regex("\\:(\\d+)", data.ibm_container_cluster_config.cluster_config.host)[0])
+}
+
+resource "ibm_is_security_group_rule" "egress_cluster_rule" {
+  group     = data.ibm_is_security_group.runner_sg.id
+  direction = "outbound"
+  remote    = "0.0.0.0/0"
+
+  tcp {
+    port_min = local.cluster_port
+    port_max = local.cluster_port
+  }
+  
+  depends_on = [ibm_container_vpc_cluster.cluster]
+}
