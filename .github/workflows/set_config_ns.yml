@@ -17,6 +17,14 @@ jobs:
       run: |
         curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
         ibmcloud plugin install container-service -f
+    
+    - name: Install OpenShift CLI (oc)
+      run: |
+        curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz
+        tar -xvzf openshift-client-linux.tar.gz
+        chmod +x oc kubectl
+        sudo mv oc kubectl /usr/local/bin/
+        oc version
 
     - name: Login to IBM Cloud
       run: |
