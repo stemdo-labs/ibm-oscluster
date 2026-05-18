@@ -1,0 +1,31 @@
+name: Deploy namespaces IBM Cloud
+on:
+  workflow_dispatch:
+
+env:
+  IBM_CLOUD_REGION: eu-es  
+  CLUSTER_NAME: ez-ibm-openshift-vpc
+
+jobs:
+  deploy-k8s:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install IBM Cloud CLI & plugins
+      run: |
+        curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
+        ibmcloud plugin install container-service -f
+
+    - name: Login to IBM Cloud
+      run: |
+        ibmcloud login --apikey ${{ secrets.IBM_CLOUD_API_KEY }} -r ${{ env.IBM_CLOUD_REGION }}
+
+    - name: Set kubeconfig for IKS
+      run: |
+        ibmcloud ks cluster config --cluster ${{ env.CLUSTER_NAME }}
+
+    - name: Deploy manifests to IKS
+      run: |
+        kubectl apply -R -f k8s/
