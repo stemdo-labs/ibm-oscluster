@@ -1,0 +1,44 @@
+name: Generate K8s User Manifests
+
+on:
+  workflow_dispatch:
+    inputs:
+      usernames:
+        description: 'Nombres de usuarios separados por coma (ej: rgonzalez,icasado)'
+        required: true
+        type: string
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generar manifiestos
+        run: |
+          # Separa los nombres por coma
+          IFS=',' read -ra USER_ARRAY <<< "${{ github.event.inputs.usernames }}"
+
+          for NAME in "${USER_ARRAY[@]}"; do
+            DEST="k8s_namespaces/${NAME}"
+            mkdir -p "$DEST"
+
+          DOMAIN="stemdo.io"
+          EMAIL="${NAME}@${DOMAIN}"
+
+          for template in namespace_templates/*.yaml; do
+            filename=$(basename "$template")
+            sed "s/__NAME__/${NAME}/g; s/__EMAIL__/${EMAIL}/g" "$template" > "${DEST}/${filename}"
+          done
+
+            echo "Archivos generados para ${NAME} con email : ${EMAIL} en ${DEST}:"
+            ls -la "$DEST"
+          done
+
+      - name: Subir artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: k8s_user_manifests
+          path: k8s_namespaces/
