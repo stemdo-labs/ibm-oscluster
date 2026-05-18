@@ -28,7 +28,7 @@ jobs:
           DOMAIN="stemdo.io"
           EMAIL="${NAME}@${DOMAIN}"
 
-          for template in namespace_templates/*.yaml; do
+          for template in namespace_templates/*.yml; do
             filename=$(basename "$template")
             sed "s/__NAME__/${NAME}/g; s/__EMAIL__/${EMAIL}/g" "$template" > "${DEST}/${filename}"
           done
