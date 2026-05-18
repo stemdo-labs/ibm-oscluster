@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns-cntenorio
+  annotations:
+    openshift.io/description: "Namespace para cntenorio"
+    openshift.io/display-name: "cntenorio"
