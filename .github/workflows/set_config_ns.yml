@@ -24,8 +24,9 @@ jobs:
 
     - name: Set kubeconfig for IKS
       run: |
-        ibmcloud oc cluster config --cluster ${{ env.CLUSTER_NAME }} --admin
+        ibmcloud ks cluster config --cluster ${{ env.CLUSTER_NAME }} --admin
 
     - name: Deploy manifests to IKS
       run: |
-        oc apply -R -f k8s/
+        oc apply -R -f .
+      working-directory: ./k8s
