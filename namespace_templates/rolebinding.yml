@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: __NAME__-roleBinding
+  namespace: ns-__NAME__
+roleRef:
+  kind: Role
+  name: ns-__NAME__-admin
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: User
+  name: IAM#__EMAIL__  
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,21 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: ns-__NAME__
+  name: ns-__NAME__-admin
+rules:
+- apiGroups: ["", "apps", "storage.k8s.io"]
+  resources: ["deployments", "pods", "pods/log", "pods/exec", "pods/portforward", "secrets", "configmaps", "services", "persistencevolume", "persistentvolumeclaims", "storageclasses"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["apps.openshift.io"]
+  resources: ["deploymentconfigs"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["route.openshift.io"]
+  resources: ["routes"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["get", "list", "watch"]

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns-__NAME__
+  annotations:
+    openshift.io/description: "Namespace para __NAME__"
+    openshift.io/display-name: "__NAME__"
