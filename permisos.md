@@ -78,7 +78,7 @@ Necesario para el ejercicio 8.
 | Rol     | Tipo       | Para qué sirve                           |
 | ------- | ---------- | ---------------------------------------- |
 | Editor  | Plataforma | Crear y eliminar instancias del servicio |
-| Manager | Servicio   | Configuración completa de la instancia   |
+| Gestor | Servicio   | Configuración completa de la instancia   |
 
 
 ### Documentación oficial
