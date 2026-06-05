@@ -86,9 +86,25 @@ Necesario para el ejercicio 8.
 https://cloud.ibm.com/docs/monitoring?topic=monitoring-iam_grant
 
 
+## 6. Kubernetes Service
+
+Necesario para 
+### Permisos requeridos
+
+| Rol     | Tipo       | Para qué sirve                           |
+| ------- | ---------- | ---------------------------------------- |
+| Visor   | Plataforma |  Ver el clúster en IBM Cloud y obtener el kubeconfig |
+| Lector  | Servicio   | Autenticar contra la API del clúster |
+
+> El acceso real de despliegue se gestiona mediante RBAC. [Configuración RBAC](./README.md)
+
+### Documentación oficial
+
+https://cloud.ibm.com/docs/monitoring?topic=monitoring-iam_grant
+
 ---
 
-## 6. Resumen 
+## 7. Resumen 
 
 | Servicio                      | Rol de Plataforma | Rol de Servicio | Scope                     |
 | ----------------------------- | ----------------- | --------------- | ------------------------- |
