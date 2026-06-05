@@ -88,7 +88,7 @@ https://cloud.ibm.com/docs/monitoring?topic=monitoring-iam_grant
 
 ## 6. Kubernetes Service
 
-Necesario para 
+Necesario para conectarse y desplegar aplicaciones en el clúster de OpenShift.
 ### Permisos requeridos
 
 | Rol     | Tipo       | Para qué sirve                           |
@@ -113,7 +113,7 @@ https://cloud.ibm.com/docs/monitoring?topic=monitoring-iam_grant
 | Container Registry            | Administrador     | Gestor          | Resource Group específico |
 | Cloud Object Storage          | Editor            | Escritor        | Resource Group específico |
 | IBM Cloud Monitoring (Sysdig) | Editor            | Gestor          | Resource Group específico |
-
+| Kubernetes Service            | Visor             | Lector          | Resource Group específico |
 ---
 ### Referencia general IAM en IBM Cloud
 
