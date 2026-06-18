@@ -8,5 +8,5 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: User
-  name: IAM#serviceid-119cfcaf-2716-42d9-9774-2a7d30c4f2c1
+  name: IAM#cntenorio@stemdo.io
   apiGroup: rbac.authorization.k8s.io
