@@ -1,4 +1,4 @@
-name: IBM CLUSTER
+name: IBM CLUSTER · PLAY/APPLY
 run-name: IBM CLUSTER · ${{ github.event.pull_request.merged && 'Apply' || 'Plan' }}
 
 on:
