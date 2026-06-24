@@ -1,4 +1,4 @@
-name: IBM CLUSTER · PLAY/APPLY
+name: IBM CLUSTER · Plan/Apply
 run-name: IBM CLUSTER · ${{ github.event.inputs.action }}
 
 on:
