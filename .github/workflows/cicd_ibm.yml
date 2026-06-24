@@ -1,8 +1,16 @@
 name: IBM CLUSTER · PLAY/APPLY
-run-name: IBM CLUSTER · ${{ github.event.pull_request.merged && 'Apply' || 'Plan' }}
+run-name: IBM CLUSTER · ${{ github.event.inputs.action
 
 on:
   workflow_dispatch:
+    inputs:
+      action:
+        description: 'Acción a ejecutar'
+        required: true
+        type: choice
+        options:
+          - plan
+          - plan/apply
   # pull_request:
   #   types: [opened, synchronize, closed]
   #   paths:
