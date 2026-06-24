@@ -15,8 +15,8 @@ jobs:
 
     env:
       TF_VAR_ibmcloud_api_key: ${{ secrets.IBM_CLOUD_API_KEY }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.hmac_access_key }}  
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.hmac_secret_access_key }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.HMAC_ACCESS_KEY }}  
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.HMAC_SECRET_KEY  }}
 
 
     steps:
