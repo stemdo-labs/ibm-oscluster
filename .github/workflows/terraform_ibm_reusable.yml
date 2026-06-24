@@ -147,5 +147,5 @@ jobs:
             });
           
       - name: Terraform Apply
-        if: ${{ github.event.inputs.action == 'apply' }}
+        if: ${{ github.event.inputs.action == 'plan/apply' }}
         run: terraform apply -auto-approve tfplan      
