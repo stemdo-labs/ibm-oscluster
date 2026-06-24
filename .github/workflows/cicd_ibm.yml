@@ -1,5 +1,5 @@
 name: IBM CLUSTER · PLAY/APPLY
-run-name: IBM CLUSTER · ${{ github.event.inputs.action
+run-name: IBM CLUSTER · ${{ github.event.inputs.action }}
 
 on:
   workflow_dispatch:
