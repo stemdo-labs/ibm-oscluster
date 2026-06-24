@@ -1,0 +1,36 @@
+name: IBM CLUSTER · Destroy
+run-name: IBM CLUSTER · Destroy · ${{ github.actor }}
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  terraform-destroy:
+    name: Terraform Destroy
+    runs-on: ubuntu-latest
+
+    env:
+      TF_VAR_ibmcloud_api_key: ${{ secrets.IBM_CLOUD_API_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.hmac_access_key }}  
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.hmac_secret_access_key }}
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.5.7"
+
+      - name: Terraform Init
+        run: |
+          terraform init -input=false
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve 

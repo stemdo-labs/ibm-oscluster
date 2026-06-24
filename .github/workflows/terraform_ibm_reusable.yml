@@ -34,6 +34,12 @@ on:
       ibm_api_key:
         description: 'Clave de API de IBM Cloud utilizada para autenticar las operaciones del workflow'
         required: true
+      hmac_access_key:
+        description: 'HMAC access key ID para autenticarse con IBM Cloud Object Storage'
+        required: true
+      hmac_secret_access_key:
+        description: 'HMAC access secret key para autenticarse con IBM Cloud Object Storage'
+        required: true
    
 
 permissions:
@@ -46,7 +52,10 @@ jobs:
   terraform:
     runs-on: ubuntu-22.04
     env:
-      TF_VAR_ibm_api_key: ${{ secrets.ibm_api_key }}      
+      TF_VAR_ibm_api_key: ${{ secrets.ibm_api_key }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.hmac_access_key }}  
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.hmac_secret_access_key }}
+ 
 
 
     defaults:
