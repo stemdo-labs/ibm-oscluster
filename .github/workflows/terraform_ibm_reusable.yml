@@ -1,0 +1,142 @@
+name: Terraform
+
+on:
+  workflow_call:
+    inputs:
+      terraform_version:
+        required: true
+        type: string
+
+      working_dir:
+        required: false
+        type: string
+        default: "."
+
+      backend_config:
+        required: false
+        type: string
+        default: ""
+
+      var_files:
+        required: false
+        type: string
+        default: ""
+
+      vars:
+        required: false
+        type: string
+        default: "[]"
+    
+    secrets:
+      token:
+        description: 'Github token. Use "secrets.GITHUB_TOKEN" or PAT'
+        required: true
+      ibm_api_key:
+        description: 'Clave de API de IBM Cloud utilizada para autenticar las operaciones del workflow'
+        required: true
+   
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  terraform:
+    runs-on: ubuntu-22.04
+    env:
+      TF_VAR_ibm_api_key: ${{ secrets.ibm_api_key }}      
+
+
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_dir }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Terraform Init
+        run: |
+          terraform init -input=false
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          set -e
+
+          terraform plan \
+            -input=false \
+            -no-color \
+            $( [ -n '${{ inputs.var_files }}' ] && echo '${{ inputs.var_files }}' | jq -r '.[] | "-var-file=\(.)"' ) \
+            $( [ -n '${{ inputs.vars }}' ] && echo '${{ inputs.vars }}' | jq -r '.[] | "-var=\(.)"' ) \
+            -out=tfplan
+
+          terraform show -no-color tfplan > plan.txt
+
+          echo "terraform_plan<<EOF" >> $GITHUB_OUTPUT 
+          cat plan.txt >> $GITHUB_OUTPUT 
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Extract last part of string after / Working Dir
+        id: pwd
+        shell: bash
+        run: |
+            INPUT_STRING=${{ inputs.working_dir }}
+            LAST_PART=${INPUT_STRING##*/}
+            echo "last_part=$LAST_PART" >> $GITHUB_OUTPUT
+
+      - name: Upload Plan Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan
+          path: ${{ inputs.working_dir }}/plan.txt
+
+      - name: Add plan to PR comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        env:
+          TFPLAN_STDOUT: "${{ steps.plan.outputs.terraform_plan }}"
+        with:
+          github-token: ${{ secrets.token }}
+          script: |
+            const tfplan = process.env.TFPLAN_STDOUT || "No plan output";
+
+            const tfplanArray = tfplan.split('\n');
+            const tfplanResultLine = tfplanArray.find(value => /^Plan:/.test(value));
+            const planSummary = tfplanResultLine
+              ? tfplanResultLine.split(':')[1].trim()
+              : "No changes. Your infrastructure matches the configuration.";
+
+            const maxLength = 60000;
+            const truncatedPlan = tfplan.length > maxLength
+              ? tfplan.substring(0, maxLength) + "\n... (truncated)"
+              : tfplan;
+
+            const output = `### Terraform Plan
+            ${planSummary}
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`terraform
+            ${truncatedPlan}
+            \`\`\`
+
+            </details>
+
+            *Pusher: @${context.actor}*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            });
+          
+      - name: Terraform Apply
+        if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+        run: terraform apply -auto-approve tfplan      
