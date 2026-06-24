@@ -87,33 +87,44 @@ oc get nodes
 
 ## Workflows CI/CD
 
+El flujo de Terraform corre a través de dos pipelines independientes de GitHub Actions.
+
+
+###  Plan & Apply
+
+Se activa manualmente.
+
+#### Flujo de trabajo
+
+```
+1. Ve a Actions → IBM CLUSTER → Run workflow
+      └─ Selecciona la acción: plan o apply
+
+2. Plan
+      └─ Terraform muestra los cambios que se aplicarían
+         └─ Revisa el output en los logs de la ejecución
+
+3. Apply
+      └─ Terraform aplica los cambios sobre la infraestructura
+```
+
+
+
+###  Destroy
+
+Se activa manualmente.
+
+#### Flujo de trabajo
+
+```
+1. Ve a Actions → IBM CLUSTER · Destroy → Run workflow
+      └─ Terraform destruye toda la infraestructura aprovisionada
+```
+---
+
 La infraestructura y los despliegues Kubernetes se gestionan mediante **GitHub Actions**.
 
-El flujo de Terraform corre a través de una pipeline de GitHub Actions.
- 
-### Trigger
- 
-La pipeline se activa cuando hay cambios en `terraform.tfvars` sobre una Pull Request:
- 
-```yaml
-on:
-  pull_request:
-    types: [opened, synchronize, closed]
-    paths:
-      - 'terraform.tfvars'
-```
-### Flujo de trabajo
- 
-```
-1. Modifica terraform.tfvars  →  añade/elimina usuarios, cambia región, etc.
-2. Abre una Pull Request
-      └─ Pipeline ejecuta terraform plan
-         └─ Revisa el plan en los comentarios/logs de la PR
-3. Aprueba y mergea la PR
-      └─ Pipeline ejecuta terraform apply automáticamente
-```
-
-#### Deploy Namespaces OpenShift
+### Deploy Namespaces OpenShift
 
 - Ejecución manual
 - Configura credenciales IBM Cloud
@@ -126,7 +137,7 @@ on:
 
   Mediante: `kubectl apply -f <manifest>`
 
-#### Generate K8s User Manifests
+### Generate K8s User Manifests
 
 - Ejecución manual (`workflow_dispatch`)
 - Recibe un parámetro `usernames` con nombres de usuario separados por coma (`rgonzalez,icasado`)
