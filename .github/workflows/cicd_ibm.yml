@@ -22,4 +22,4 @@ jobs:
       var_files: '["terraform.tfvars"]'
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
-      ibm_api_key: ${{ secrets.IBM_API_KEY }}
+      ibm_api_key: ${{ secrets.IBM_CLOUD_API_KEY }}
