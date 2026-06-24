@@ -3,7 +3,7 @@ terraform {
     bucket                      = "tfstate-cluster-bootcamp"
     key                         = "bootcamp/cluster/terraform.tfstate"
     region                      = "eu-es"
-    endpoints                   = "https://s3.eu-es.cloud-object-storage.appdomain.cloud"
+    endpoint                    = "https://s3.eu-es.cloud-object-storage.appdomain.cloud"
     
 
     # Parámetros para IBM Cloud COS para desactivar validaciones
