@@ -1,6 +1,6 @@
 # Infraestructura OpenShift en IBM Cloud - Terraform
 
-## 📌 Descripción General
+## Descripción General
 
 Este repositorio contiene la definición de infraestructura como código (IaC) para la creación y gestión de un **cluster OpenShift en IBM Cloud** utilizando **Terraform**.
 
@@ -8,13 +8,11 @@ La arquitectura implementa un cluster **OpenShift VPC** con red privada, subrede
 
 ---
 
----
-
-## 🏗 Arquitectura
+## Arquitectura
 
 La infraestructura se despliega en IBM Cloud utilizando Terraform y se compone de los siguientes elementos:
 
-### 🔹 Componentes principales
+### Componentes principales
 
 - **Storage**
   - Buckets para estado remoto de Terraform
@@ -34,14 +32,14 @@ La infraestructura se despliega en IBM Cloud utilizando Terraform y se compone d
 - **Container Registry**
   - Namespace en IBM Container Registry (`ibm_cr_namespace`) asociado al Resource Group
 
-### 🏷 Etiquetado
+### Etiquetado
 
 - `name` = `bootcamp-<nombre>` (definido en variables)
 - `resource_group` = grupo de recursos asignado
 
 ---
 
-## ⚙️ Requisitos
+## Requisitos
 
 Herramientas necesarias:
 
@@ -53,7 +51,7 @@ Herramientas necesarias:
 
 
 
-## 🌍 Región IBM Cloud
+## Región IBM Cloud
 
 Región actual utilizada (configurable en `terraform.tfvars`):
 
@@ -65,7 +63,7 @@ Las zonas se generan dinámicamente como `<region>-1`, `<region>-2`, etc., segú
 
 ---
 
-## ☸️ Acceso al Cluster OpenShift
+## Acceso al Cluster OpenShift
 
 Iniciar sesión en IBM Cloud:
 
@@ -87,12 +85,33 @@ oc get nodes
 
 ---
 
-## 🔄 Workflows CI/CD
+## Workflows CI/CD
 
 La infraestructura y los despliegues Kubernetes se gestionan mediante **GitHub Actions**.
 
-### 📋 Workflows disponibles
-
+El flujo de Terraform corre a través de una pipeline de GitHub Actions.
+ 
+### Trigger
+ 
+La pipeline se activa cuando hay cambios en `terraform.tfvars` sobre una Pull Request:
+ 
+```yaml
+on:
+  pull_request:
+    types: [opened, synchronize, closed]
+    paths:
+      - 'terraform.tfvars'
+```
+### Flujo de trabajo
+ 
+```
+1. Modifica terraform.tfvars  →  añade/elimina usuarios, cambia región, etc.
+2. Abre una Pull Request
+      └─ Pipeline ejecuta terraform plan
+         └─ Revisa el plan en los comentarios/logs de la PR
+3. Aprueba y mergea la PR
+      └─ Pipeline ejecuta terraform apply automáticamente
+```
 
 #### Deploy Namespaces OpenShift
 
@@ -120,7 +139,7 @@ La infraestructura y los despliegues Kubernetes se gestionan mediante **GitHub A
 
 ---
 
-## 🔐 Gestión de Credenciales
+## Gestión de Credenciales
 
 Los workflows utilizan credenciales de IBM Cloud almacenadas como **GitHub Secrets**:
 
@@ -130,7 +149,7 @@ Estas credenciales son utilizadas tanto por Terraform como por `kubectl`/`oc` pa
 
 ---
 
-## 📐 Variables principales
+## Variables principales
 
 | Variable | Descripción | Valor por defecto |
 |---|---|---|
