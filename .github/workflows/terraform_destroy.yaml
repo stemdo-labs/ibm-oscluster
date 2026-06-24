@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      TF_VAR_ibmcloud_api_key: ${{ secrets.IBM_CLOUD_API_KEY }}
+      TF_VAR_ibmc_api_key: ${{ secrets.IBM_CLOUD_API_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.HMAC_ACCESS_KEY }}  
       AWS_SECRET_ACCESS_KEY: ${{ secrets.HMAC_SECRET_KEY  }}
 
