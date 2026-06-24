@@ -152,11 +152,11 @@ La infraestructura y los despliegues Kubernetes se gestionan mediante **GitHub A
 
 ## Gestión de Credenciales
 
-Los workflows utilizan credenciales de IBM Cloud almacenadas como **GitHub Secrets**:
+Los workflows utilizan credenciales de IBM Cloud almacenadas como GitHub Secrets:
 
-- `IBMCLOUD_API_KEY`
-
-Estas credenciales son utilizadas tanto por Terraform como por `kubectl`/`oc` para interactuar con el cluster OpenShift.
+- `IBM_CLOUD_API_KEY` — API Key de IBM Cloud, utilizada por Terraform y por `kubectl`/`oc` para interactuar con el cluster OpenShift.
+- `HMAC_ACCESS_KEY` — Access Key HMAC del bucket COS, utilizada por Terraform para acceder al backend de estado remoto.
+- `HMAC_SECRET_KEY` — Secret Key HMAC del bucket COS, utilizada por Terraform para acceder al backend de estado remoto.
 
 ---
 
